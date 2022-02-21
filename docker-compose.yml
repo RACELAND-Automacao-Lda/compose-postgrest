@@ -3,11 +3,11 @@ version: '3'
 services:
 
   ################
-  # postgrest-db #
+  # postgresdb #
   ################
-  postgrest-db:
-    container_name: postgrest-db
-    image: postgres:13-alpine
+  postgresdb:
+    container_name: postgresdb
+    image: postgres
     ports:
       - "5432:5432"
     environment:
@@ -37,7 +37,7 @@ services:
     environment:
       # The standard connection URI format, documented at
       # https://www.postgresql.org/docs/current/static/libpq-connect.html#LIBPQ-CONNSTRING
-      - PGRST_DB_URI=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgrest-db:5432/${POSTGRES_DB}
+      - PGRST_DB_URI=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgresdb:5432/${POSTGRES_DB}
       # The name of which database schema to expose to REST clients
       - PGRST_DB_SCHEMA=${DB_SCHEMA}
       # The database role to use when no client authentication is provided
@@ -62,6 +62,9 @@ services:
       - pgadmin:/root/.pgadmin
       - ./pgadmin_config:/cfg
       - ./pgadmin_config/servers.json:/pgadmin4/servers.json
+    networks:
+      - postgrest-backend
+
 
 networks:
   postgrest-backend:
