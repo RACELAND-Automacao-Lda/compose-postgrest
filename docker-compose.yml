@@ -65,6 +65,25 @@ services:
     networks:
       - postgrest-backend
 
+  prest:
+    # use latest build
+    image: prest/prest
+    environment:
+      - PREST_DEBUG=false
+      - PREST_AUTH_ENABLED=true
+      - PREST_PG_HOST=postgresdb
+      - PREST_PG_USER=postgres
+      - PREST_PG_PASS=postgres
+      - PREST_PG_DATABASE=postgres
+      - PREST_PG_PORT=5432
+      - PREST_SSL_MODE=disable
+      - PREST_CACHE_ENABLED=true
+    ports:
+      - "3001:3000"
+    networks:
+      - postgrest-backend
+
+
 
 networks:
   postgrest-backend:
